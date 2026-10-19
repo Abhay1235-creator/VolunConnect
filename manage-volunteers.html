@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Volunteers | VolunConnect</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <link rel="icon" href="https://api.iconify.design/lucide/users.svg?color=%230d9488" type="image/svg+xml">
+</head>
+
+<body class="dashboard-body admin-dashboard">
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="admin-sidebar">
+      <a href="index.html" class="brand sidebar-brand">
+        <span class="brand-icon" aria-hidden="true">♥</span>
+        <span>VolunConnect</span>
+      </a>
+
+      <p class="sidebar-label">ADMINISTRATION</p>
+
+      <nav class="sidebar-nav" aria-label="Admin navigation">
+        <a href="admin.html" class="sidebar-link">▦ Dashboard</a>
+        <a href="manage-volunteers.html" class="sidebar-link active">♙ Manage Volunteers</a>
+        <a href="manage-events.html" class="sidebar-link">▤ Manage Events</a>
+        <a href="admin-applications.html" class="sidebar-link">▧ Applications</a>
+        <a href="reports.html" class="sidebar-link">▥ Reports</a>
+        <a href="notifications.html" class="sidebar-link">♧ Notifications</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="login.html" class="sidebar-link" data-logout>↪ Logout</a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button type="button" class="sidebar-toggle"
+          id="admin-menu-toggle" aria-label="Toggle sidebar"
+          aria-controls="admin-sidebar" aria-expanded="false">☰</button>
+        <div class="topbar-spacer"></div>
+        <span id="admin-name">Administrator</span>
+      </header>
+
+      <div class="dashboard-content">
+        <section class="dashboard-section">
+          <h1>Manage Volunteers</h1>
+          <p>View registered volunteer accounts and their account status.</p>
+        </section>
+
+        <section class="dashboard-stats admin-stats">
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Total Volunteers</span>
+              <strong class="metric-value" id="volunteer-count">0</strong>
+            </div>
+          </article>
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Active Accounts</span>
+              <strong class="metric-value" id="volunteer-active-count">0</strong>
+            </div>
+          </article>
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Inactive Accounts</span>
+              <strong class="metric-value" id="volunteer-inactive-count">0</strong>
+            </div>
+          </article>
+        </section>
+
+        <section class="dashboard-section">
+          <div class="dashboard-section-heading">
+            <div>
+              <h2>Registered Volunteers</h2>
+              <p id="volunteer-table-summary">Loading volunteers...</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="volunteer-search">Search by name or email</label>
+            <input id="volunteer-search" type="search"
+              placeholder="Search volunteers...">
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Registered</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="admin-volunteers-table">
+                <tr><td colspan="4">Loading volunteers...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p id="volunteer-page-message" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <footer class="dashboard-footer">
+        <p>© <span id="current-year"></span> VolunConnect</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create an Account | VolunConnect</title>
+
+  <link rel="icon" href="https://api.iconify.design/lucide/user-plus.svg?color=%23059669" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body class="auth-body">
+
+  <header class="auth-header">
+    <a href="index.html" class="brand">
+      <span class="brand-icon" aria-hidden="true">♥</span>
+      <span>VolunConnect</span>
+    </a>
+
+    <a href="index.html" class="back-home">← Back to home</a>
+  </header>
+
+  <main class="auth-layout register-layout">
+
+    <div class="auth-decoration auth-leaf-one"></div>
+    <div class="auth-decoration auth-leaf-two"></div>
+
+    <section class="auth-card register-card" aria-labelledby="register-title">
+
+      <div class="auth-logo">
+        <span class="brand-icon" aria-hidden="true">♥</span>
+        <span>VolunConnect</span>
+      </div>
+
+      <div class="auth-heading">
+        <h1 id="register-title">Create an Account</h1>
+        <p>Join our community of volunteers</p>
+      </div>
+
+      <form id="register-form">
+
+        <div class="form-group">
+          <label for="register-name">Full Name</label>
+
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">♙</span>
+
+            <input
+              type="text"
+              id="register-name"
+              name="name"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              minlength="2"
+              maxlength="80"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="register-email">Email</label>
+
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">✉</span>
+
+            <input
+              type="email"
+              id="register-email"
+              name="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="register-password">Password</label>
+
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">♙</span>
+
+            <input
+              type="password"
+              id="register-password"
+              name="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            >
+
+            <button
+              class="password-toggle"
+              type="button"
+              data-toggle-password="register-password"
+              aria-label="Show password"
+            >Show</button>
+          </div>
+
+          <small class="field-hint">
+            Use at least 8 characters for this prototype.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">♙</span>
+
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirmPassword"
+              placeholder="Confirm your password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            >
+
+            <button
+              class="password-toggle"
+              type="button"
+              data-toggle-password="confirm-password"
+              aria-label="Show password"
+            >Show</button>
+          </div>
+        </div>
+
+        <fieldset class="role-fieldset">
+          <legend>I am registering as</legend>
+
+          <label class="radio-option">
+            <input
+              type="radio"
+              name="role"
+              value="volunteer"
+              checked
+            >
+            <span>Volunteer</span>
+          </label>
+
+          <label class="radio-option">
+            <input
+              type="radio"
+              name="role"
+              value="organization"
+            >
+            <span>Organization</span>
+          </label>
+        </fieldset>
+
+        <label class="terms-option">
+          <input type="checkbox" id="terms" name="terms" required>
+          <span>
+            I agree to the
+            <a href="#" data-demo-link>Terms and Conditions</a>.
+          </span>
+        </label>
+
+        <p class="form-message" id="register-message" role="status" aria-live="polite"></p>
+
+        <button class="btn btn-primary auth-submit" type="submit">
+          Register
+        </button>
+
+      </form>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </p>
+
+      <p class="auth-disclaimer">
+        Registration will be connected to the demo data system on Day 3.
+      </p>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

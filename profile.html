@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | VolunConnect</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/volunteer.css">
+
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="profile.js" defer></script>
+  <link rel="icon" href="https://api.iconify.design/lucide/user-round.svg?color=%230d9488" type="image/svg+xml">
+</head>
+<body class="dashboard-body volunteer-dashboard">
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="volunteer-sidebar">
+      <a href="dashboard.html" class="brand sidebar-brand">
+        <span>♥</span><span>VolunConnect</span>
+      </a>
+
+      <p class="sidebar-label">WORKSPACE</p>
+
+      <nav class="sidebar-nav" aria-label="Volunteer navigation">
+        <a href="dashboard.html" class="sidebar-link">Dashboard</a>
+        <a href="opportunities.html" class="sidebar-link">Browse Opportunities</a>
+        <a href="applications.html" class="sidebar-link">My Applications</a>
+        <a href="profile.html" class="sidebar-link active">My Profile</a>
+        <a href="certificates.html" class="sidebar-link">Certificates</a>
+        <a href="notifications.html" class="sidebar-link">Notifications</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="login.html" class="sidebar-link" data-logout>Logout</a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button type="button" class="sidebar-toggle"
+          id="volunteer-menu-toggle"
+          aria-controls="volunteer-sidebar"
+          aria-expanded="false"
+          aria-label="Toggle sidebar">☰</button>
+        <div class="topbar-spacer"></div>
+      </header>
+
+      <div class="dashboard-content">
+        <header class="page-heading">
+          <h1>My Profile</h1>
+          <p>View and update your volunteer account information.</p>
+        </header>
+
+        <section class="profile-card">
+          <div class="profile-avatar" id="profile-avatar">V</div>
+          
+<div class="profile-photo-controls">
+  <label for="profile-image-input">Profile Picture</label>
+
+  <input
+    type="file"
+    id="profile-image-input"
+    accept="image/jpeg,image/png,image/webp"
+  >
+
+  <p class="profile-photo-help">
+    JPG, PNG, or WebP. Maximum file size: 1 MB.
+  </p>
+
+  <button
+    type="button"
+    id="profile-image-remove"
+    class="btn btn-secondary"
+    hidden
+  >
+    Remove Profile Picture
+  </button>
+</div>
+
+          <h2 id="profile-display-name">Loading profile...</h2>
+          <p id="profile-display-email"></p>
+          <span class="profile-badge" id="profile-display-role">Volunteer</span>
+        </section>
+
+        <section class="dashboard-section profile-form-section">
+          <h2>Personal Information</h2>
+
+          <form id="profile-form">
+            <div class="profile-form-grid">
+              <div class="form-group">
+                <label for="profile-name">Full Name</label>
+                <input id="profile-name" name="name"
+                  type="text" minlength="2" maxlength="80" required>
+              </div>
+
+              <div class="form-group">
+                <label for="profile-email">Email Address</label>
+                <input id="profile-email" name="email"
+                  type="email" readonly>
+                <small>Email cannot be changed here.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="profile-role">Account Type</label>
+                <input id="profile-role" type="text" readonly>
+              </div>
+
+              <div class="form-group">
+                <label for="profile-joined">Member Since</label>
+                <input id="profile-joined" type="text" readonly>
+              </div>
+            </div>
+
+            <p id="profile-message" role="status" aria-live="polite"></p>
+
+            <button type="submit" class="btn btn-primary" id="profile-save">
+              Save Changes
+            </button>
+          </form>
+        </section>
+
+        <p><a href="dashboard.html">← Back to Dashboard</a></p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Events | VolunConnect</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <link rel="icon" href="https://api.iconify.design/lucide/calendar-plus.svg?color=%23db2777" type="image/svg+xml">
+</head>
+
+<body class="dashboard-body admin-dashboard">
+  <div class="dashboard-layout">
+
+    <aside class="sidebar" id="admin-sidebar">
+      <a href="index.html" class="brand sidebar-brand">
+        <span class="brand-icon" aria-hidden="true">♥</span>
+        <span>VolunConnect</span>
+      </a>
+
+      <p class="sidebar-label">ADMINISTRATION</p>
+
+      <nav class="sidebar-nav" aria-label="Admin navigation">
+        <a href="admin.html" class="sidebar-link">▦ Dashboard</a>
+        <a href="manage-volunteers.html" class="sidebar-link">♙ Manage Volunteers</a>
+        <a href="manage-events.html" class="sidebar-link active">▤ Manage Events</a>
+        <a href="admin-applications.html" class="sidebar-link">▧ Applications</a>
+        <a href="reports.html" class="sidebar-link">▥ Reports</a>
+        <a href="notifications.html" class="sidebar-link">♧ Notifications</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="index.html" class="sidebar-link">⚙ Settings</a>
+        <a href="login.html" class="sidebar-link" data-logout>↪ Logout</a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button
+          type="button"
+          class="sidebar-toggle"
+          id="admin-menu-toggle"
+          aria-label="Toggle sidebar"
+          aria-controls="admin-sidebar"
+          aria-expanded="false"
+        >☰</button>
+
+        <div class="topbar-spacer"></div>
+        <span id="admin-name">Administrator</span>
+      </header>
+
+      <div class="dashboard-content">
+        <section class="dashboard-section">
+          <div class="dashboard-section-heading">
+            <div>
+              <h1>Manage Events</h1>
+              <p>Create, update and remove volunteer opportunities.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard-section panel">
+          <div class="panel-heading">
+            <div>
+              <h2 id="event-form-heading">Create a New Event</h2>
+              <p>Complete the details below.</p>
+            </div>
+          </div>
+
+          <form id="admin-event-form">
+            <input type="hidden" id="admin-event-id">
+
+            <div class="form-group">
+              <label for="admin-event-title">Event title</label>
+              <input
+                type="text"
+                id="admin-event-title"
+                required
+                maxlength="100"
+                placeholder="e.g. Tree Plantation Drive"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="admin-event-category">Category</label>
+              <select id="admin-event-category" required>
+                <option value="">Select a category</option>
+                <option value="Environment">Environment</option>
+                <option value="Education">Education</option>
+                <option value="Community">Community</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            
+<div class="form-group">
+  <label for="admin-event-image">Event poster or image (optional)</label>
+
+  <input
+    type="file"
+    id="admin-event-image"
+    accept="image/jpeg,image/png,image/webp"
+  >
+
+  <small>Upload JPG, PNG, or WebP. Maximum size: 2 MB.</small>
+
+  <div class="event-image-preview-wrapper">
+    <img
+      id="admin-event-image-preview"
+      class="event-image-preview"
+      src=""
+      alt="Event image preview"
+      hidden
+    >
+    <p id="admin-event-image-label">
+      No custom image selected. The default category image will be used.
+    </p>
+  </div>
+
+  <button
+    type="button"
+    id="admin-event-image-remove"
+    class="btn btn-secondary"
+    hidden
+  >
+    Remove Custom Image
+  </button>
+</div>
+
+            <div class="form-group">
+              <label for="admin-event-date">Event date</label>
+              <input type="date" id="admin-event-date" required>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-event-location">Location</label>
+              <input
+                type="text"
+                id="admin-event-location"
+                required
+                maxlength="150"
+                placeholder="Enter event location"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="admin-event-capacity">Volunteer capacity</label>
+              <input
+                type="number"
+                id="admin-event-capacity"
+                required
+                min="1"
+                step="1"
+                value="20"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="admin-event-status">Status</label>
+              <select id="admin-event-status" required>
+                <option value="upcoming">Upcoming</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-event-description">Description</label>
+              <textarea
+                id="admin-event-description"
+                required
+                maxlength="2000"
+                rows="4"
+                placeholder="Describe the event and volunteer responsibilities"
+              ></textarea>
+            </div>
+
+            <p id="admin-event-message" role="status" aria-live="polite"></p>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="admin-event-submit">
+                Create Event
+              </button>
+
+              <button type="button" class="btn btn-secondary" id="admin-event-cancel" hidden>
+                Cancel Edit
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="dashboard-section">
+          <div class="dashboard-section-heading">
+            <div>
+              <h2>All Events</h2>
+              <p>Events currently saved in VolunConnect.</p>
+            </div>
+            <strong id="admin-event-count">0 events</strong>
+          </div>
+
+          <p id="admin-events-empty" hidden>No events found. Create your first event above.</p>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Event</th>
+                  <th>Date</th>
+                  <th>Location</th>
+                  <th>Capacity</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-events-table">
+                <tr>
+                  <td colspan="6">Loading events...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <footer class="dashboard-footer">
+        <p>© <span id="current-year"></span> VolunConnect</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Volunteer Dashboard | VolunConnect</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <link rel="icon" href="https://api.iconify.design/lucide/layout-dashboard.svg?color=%232563eb" type="image/svg+xml">
+</head>
+
+<body class="dashboard-body volunteer-dashboard">
+
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="volunteer-sidebar">
+
+      <a href="index.html" class="brand sidebar-brand">
+        <span class="brand-icon" aria-hidden="true">♥</span>
+        <span>VolunConnect</span>
+      </a>
+
+      <p class="sidebar-label">WORKSPACE</p>
+
+      <nav class="sidebar-nav" aria-label="Volunteer navigation">
+
+        <a href="dashboard.html" class="sidebar-link active">
+          <span class="sidebar-icon" aria-hidden="true">▦</span>
+          Dashboard
+        </a>
+
+        <a href="opportunities.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">⌕</span>
+          Browse Opportunities
+        </a>
+
+        <a href="applications.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">▤</span>
+          My Applications
+        </a>
+
+        <a href="profile.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">♙</span>
+          My Profile
+        </a>
+
+        <a href="certificates.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">♧</span>
+          Certificates
+        </a>
+
+        <a href="notifications.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">♧</span>
+          Notifications
+        </a>
+
+      </nav>
+
+            <div class="sidebar-bottom">
+        <a href="login.html" class="sidebar-link" data-logout>
+          <span class="sidebar-icon" aria-hidden="true">↪</span>
+          Logout
+        </a>
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN AREA -->
+    <div class="dashboard-main">
+
+      <header class="dashboard-topbar">
+
+        <button
+          type="button"
+          class="sidebar-toggle"
+          id="volunteer-menu-toggle"
+          aria-label="Toggle sidebar"
+          aria-controls="volunteer-sidebar"
+          aria-expanded="false"
+        >☰</button>
+
+        <div class="topbar-spacer"></div>
+
+        <a
+          class="topbar-notification"
+          href="notifications.html"
+          aria-label="Notifications"
+        >♧</a>
+
+        <div class="topbar-user">
+          <div class="avatar">A</div>
+
+          <div class="topbar-user-info">
+            <strong id="volunteer-name">Abhayjit</strong>
+            <span>Volunteer</span>
+          </div>
+        </div>
+
+      </header>
+
+
+      <main class="dashboard-content">
+
+        <div class="welcome-row">
+          <div>
+            <span class="eyebrow">YOUR VOLUNTEER SPACE</span>
+            <h1>Welcome, <span id="welcome-name">Abhayjit</span>! 👋</h1>
+            <p>Thank you for being a changemaker.</p>
+          </div>
+
+          <a href="opportunities.html" class="btn btn-primary">
+            Find Opportunities <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+
+        <!-- STATISTICS -->
+        <section class="dashboard-stats" aria-label="Your volunteering statistics">
+
+          <article class="metric-card">
+            <div class="metric-icon metric-blue" aria-hidden="true">▤</div>
+            <div>
+              <span class="metric-label">Total Applications</span>
+              <strong class="metric-value" id="volunteer-total-applications">0</strong>
+              <span class="metric-caption">All your applications</span>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-icon metric-purple" aria-hidden="true">▦</div>
+            <div>
+              <span class="metric-label">Upcoming Events</span>
+              <strong class="metric-value" id="volunteer-upcoming-events">0</strong>
+              <span class="metric-caption">Events to look forward to</span>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-icon metric-green" aria-hidden="true">✓</div>
+            <div>
+              <span class="metric-label">Completed Events</span>
+              <strong class="metric-value" id="volunteer-completed-events">0</strong>
+              <span class="metric-caption">Your past contributions</span>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-icon metric-red" aria-hidden="true">◷</div>
+            <div>
+              <span class="metric-label">Hours Contributed</span>
+              <strong class="metric-value" id="volunteer-hours">—</strong>
+              <span class="metric-caption">Total volunteer hours</span>
+            </div>
+          </article>
+
+        </section>
+
+
+        <!-- RECOMMENDED EVENTS -->
+        <section class="dashboard-section">
+
+          <div class="dashboard-section-heading">
+            <div>
+              <h2>Recommended Opportunities</h2>
+              <p>Explore ways to make a difference.</p>
+            </div>
+
+            <a href="opportunities.html" class="text-link">
+              View All →
+            </a>
+          </div>
+
+          <div class="dashboard-event-grid" id="recommended-events">
+            <p>Loading opportunities...</p>
+          </div>
+
+        
+        </section>
+        
+        <section class="dashboard-section" aria-labelledby="volunteer-notifications-title">
+          <div class="dashboard-section-heading">
+            <div>
+              <h2 id="volunteer-notifications-title">Recent Notifications</h2>
+              <p id="volunteer-notification-summary" role="status">
+                Loading notifications...
+              </p>
+            </div>
+          </div>
+
+          <div id="volunteer-notifications-list">
+            <p>Loading notifications...</p>
+          </div>
+        </section>
+
+
+        <!-- RECENT APPLICATIONS -->
+        <section class="dashboard-section">
+
+          <div class="dashboard-section-heading">
+            <div>
+              <h2>Recent Applications</h2>
+              <p>Keep track of your volunteering journey.</p>
+            </div>
+
+            <a href="applications.html" class="text-link">
+              See All →
+            </a>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Event</th>
+                  <th>Applied On</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="recent-applications">
+                <tr>
+                  <td colspan="4">Loading applications...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+      
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

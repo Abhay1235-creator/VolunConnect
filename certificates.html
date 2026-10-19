@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Certificates | VolunConnect</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/volunteer.css">
+
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="certificates.js" defer></script>
+  <link rel="icon" href="https://api.iconify.design/lucide/award.svg?color=%23d97706" type="image/svg+xml">
+</head>
+<body class="dashboard-body volunteer-dashboard">
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="volunteer-sidebar">
+      <a href="dashboard.html" class="brand sidebar-brand">
+        <span>♥</span><span>VolunConnect</span>
+      </a>
+
+      <p class="sidebar-label">WORKSPACE</p>
+
+      <nav class="sidebar-nav" aria-label="Volunteer navigation">
+        <a href="dashboard.html" class="sidebar-link">Dashboard</a>
+        <a href="opportunities.html" class="sidebar-link">Browse Opportunities</a>
+        <a href="applications.html" class="sidebar-link">My Applications</a>
+        <a href="profile.html" class="sidebar-link">My Profile</a>
+        <a href="certificates.html" class="sidebar-link active">Certificates</a>
+        <a href="notifications.html" class="sidebar-link">Notifications</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="login.html" class="sidebar-link" data-logout>Logout</a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button type="button" class="sidebar-toggle"
+          id="volunteer-menu-toggle"
+          aria-controls="volunteer-sidebar"
+          aria-expanded="false"
+          aria-label="Toggle sidebar">☰</button>
+        <div class="topbar-spacer"></div>
+      </header>
+
+      <div class="dashboard-content">
+        <header class="page-heading">
+          <h1>My Certificates</h1>
+          <p>View certificates for your completed volunteer activities.</p>
+        </header>
+
+        <section class="certificate-summary-grid">
+          <article class="metric-card">
+            <span class="metric-label">Completed Activities</span>
+            <strong class="metric-value" id="certificate-completed-count">0</strong>
+          </article>
+
+          <article class="metric-card">
+            <span class="metric-label">Eligible Certificates</span>
+            <strong class="metric-value" id="certificate-eligible-count">0</strong>
+          </article>
+        </section>
+
+        <section class="dashboard-section">
+          <h2>Certificate Records</h2>
+          <p id="certificate-message" role="status" aria-live="polite"></p>
+          <div id="certificate-list">
+            <p>Loading your certificate records...</p>
+          </div>
+        </section>
+
+        <p><a href="dashboard.html">← Back to Dashboard</a></p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

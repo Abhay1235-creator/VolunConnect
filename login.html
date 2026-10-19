@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login | VolunConnect</title>
+  <link rel="icon" href="https://api.iconify.design/lucide/log-in.svg?color=%237c3aed" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body class="auth-body">
+
+  <header class="auth-header">
+    <a href="index.html" class="brand">
+      <span class="brand-icon" aria-hidden="true">♥</span>
+      <span>VolunConnect</span>
+    </a>
+
+    <a href="index.html" class="back-home">← Back to home</a>
+  </header>
+
+  <main class="auth-layout">
+
+    <div class="auth-decoration auth-leaf-one"></div>
+    <div class="auth-decoration auth-leaf-two"></div>
+
+    <section class="auth-card" aria-labelledby="login-title">
+
+      <div class="auth-logo">
+        <span class="brand-icon" aria-hidden="true">♥</span>
+        <span>VolunConnect</span>
+      </div>
+
+      <div class="auth-heading">
+        <h1 id="login-title">Welcome Back</h1>
+        <p>Login to your account to continue</p>
+      </div>
+
+      <form id="login-form">
+
+        <div class="form-group">
+          <label for="login-email">Email</label>
+
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">✉</span>
+
+            <input
+              type="email"
+              id="login-email"
+              name="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Password</label>
+
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">♙</span>
+
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              class="password-toggle"
+              type="button"
+              data-toggle-password="login-password"
+              aria-label="Show password"
+            >Show</button>
+          </div>
+        </div>
+
+        <div class="forgot-row">
+          <a href="#" id="forgot-password-link">Forgot Password?</a>
+        </div>
+
+        <p class="form-message" id="login-message" role="status" aria-live="polite"></p>
+
+        <button class="btn btn-primary auth-submit" type="submit">
+          Login
+        </button>
+
+      </form>
+
+      <p class="auth-switch">
+        Don't have an account?
+        <a href="register.html">Register here</a>
+      </p>
+
+      <div class="auth-divider">
+        <span></span>
+        <span>OR</span>
+        <span></span>
+      </div>
+
+      <button class="social-button" type="button" data-demo-social>
+        <span class="google-mark" aria-hidden="true">G</span>
+        Continue with Google
+      </button>
+
+      <button class="social-button" type="button" data-demo-social>
+        <span class="microsoft-mark" aria-hidden="true">▦</span>
+        Continue with Microsoft
+      </button>
+
+      <p class="auth-disclaimer">
+        Social sign-in is a visual placeholder in this prototype.
+      </p>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
