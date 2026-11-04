@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Applications | VolunConnect</title>
+  <link rel="icon" href="https://api.iconify.design/lucide/clipboard-check.svg?color=%237c3aed" type="image/svg+xml">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body class="dashboard-body admin-dashboard">
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="admin-sidebar">
+      <a href="index.html" class="brand sidebar-brand">
+        <span class="brand-icon" aria-hidden="true">♥</span>
+        <span>VolunConnect</span>
+      </a>
+
+      <p class="sidebar-label">ADMINISTRATION</p>
+
+      <nav class="sidebar-nav" aria-label="Admin navigation">
+        <a href="admin.html" class="sidebar-link">▦ Dashboard</a>
+        <a href="manage-volunteers.html" class="sidebar-link">♙ Manage Volunteers</a>
+        <a href="manage-events.html" class="sidebar-link">▤ Manage Events</a>
+        <a href="admin-applications.html" class="sidebar-link active">▧ Applications</a>
+        <a href="reports.html" class="sidebar-link">▥ Reports</a>
+        <a href="notifications.html" class="sidebar-link">♧ Notifications</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="login.html" class="sidebar-link" data-logout>↪ Logout</a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button
+          type="button"
+          class="sidebar-toggle"
+          id="admin-menu-toggle"
+          aria-label="Toggle sidebar"
+          aria-controls="admin-sidebar"
+          aria-expanded="false"
+        >☰</button>
+        <div class="topbar-spacer"></div>
+        <span id="admin-name">Administrator</span>
+      </header>
+
+      <div class="dashboard-content">
+        <section class="dashboard-section">
+          <h1>Volunteer Applications</h1>
+          <p>Review applications submitted for all volunteer events.</p>
+        </section>
+
+        <section class="dashboard-stats admin-stats">
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Total Applications</span>
+              <strong class="metric-value" id="all-applications-total">0</strong>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Pending</span>
+              <strong class="metric-value" id="all-applications-pending">0</strong>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Approved</span>
+              <strong class="metric-value" id="all-applications-approved">0</strong>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Rejected</span>
+              <strong class="metric-value" id="all-applications-rejected">0</strong>
+            </div>
+          </article>
+        </section>
+
+        <section class="dashboard-section">
+          <div class="dashboard-section-heading">
+            <div>
+              <h2>All Applications</h2>
+              <p>Approve or reject applications that are awaiting review.</p>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Volunteer</th>
+                  <th>Event</th>
+                  <th>Applied On</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-all-applications">
+                <tr>
+                  <td colspan="5">Loading applications...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p id="admin-applications-message" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <footer class="dashboard-footer">
+        <p>© <span id="current-year"></span> VolunConnect</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

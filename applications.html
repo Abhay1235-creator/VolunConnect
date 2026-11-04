@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Applications | VolunConnect</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/volunteer.css">
+
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <link rel="icon" href="https://api.iconify.design/lucide/file-check.svg?color=%232563eb" type="image/svg+xml">
+</head>
+
+<body class="dashboard-body volunteer-dashboard">
+
+<div class="dashboard-layout">
+
+  <aside class="sidebar" id="volunteer-sidebar">
+    <a href="index.html" class="brand sidebar-brand">
+      <span class="brand-icon" aria-hidden="true">♥</span>
+      <span>VolunConnect</span>
+    </a>
+
+    <p class="sidebar-label">WORKSPACE</p>
+
+    <nav class="sidebar-nav" aria-label="Volunteer navigation">
+      <a href="dashboard.html" class="sidebar-link">▦ Dashboard</a>
+      <a href="opportunities.html" class="sidebar-link">⌕ Browse Opportunities</a>
+      <a href="applications.html" class="sidebar-link active">▤ My Applications</a>
+      <a href="profile.html" class="sidebar-link">♙ My Profile</a>
+      <a href="certificates.html" class="sidebar-link">♧ Certificates</a>
+      <a href="notifications.html" class="sidebar-link">♧ Notifications</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="login.html" class="sidebar-link" data-logout>↪ Logout</a>
+    </div>
+  </aside>
+
+  <div class="dashboard-main">
+
+    <header class="dashboard-topbar">
+      <button
+        type="button"
+        class="sidebar-toggle"
+        id="volunteer-menu-toggle"
+        aria-controls="volunteer-sidebar"
+        aria-expanded="false"
+        aria-label="Toggle sidebar"
+      >☰</button>
+
+      <div class="topbar-spacer"></div>
+
+      <div class="topbar-user">
+        <div class="avatar">V</div>
+        <div class="topbar-user-info">
+          <strong id="volunteer-name">Volunteer</strong>
+          <span>Volunteer</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+
+      <div class="welcome-row">
+        <div>
+          <span class="eyebrow">YOUR VOLUNTEERING JOURNEY</span>
+          <h1>My Applications</h1>
+          <p>Track the progress of your event applications.</p>
+        </div>
+
+        <a href="opportunities.html" class="btn btn-primary">
+          Find Opportunities →
+        </a>
+      </div>
+
+      <section class="application-summary" aria-label="Application summary">
+        <article class="application-summary-card">
+          <span>Total Applications</span>
+          <strong id="application-total">0</strong>
+        </article>
+
+        <article class="application-summary-card">
+          <span>Pending</span>
+          <strong id="application-pending">0</strong>
+        </article>
+
+        <article class="application-summary-card">
+          <span>Approved</span>
+          <strong id="application-approved">0</strong>
+        </article>
+
+        <article class="application-summary-card">
+          <span>Rejected</span>
+          <strong id="application-rejected">0</strong>
+        </article>
+      </section>
+
+      <section class="dashboard-section">
+        <div class="dashboard-section-heading">
+          <div>
+            <h2>Application History</h2>
+            <p>Your applications and their latest statuses.</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table application-table">
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Event Date</th>
+                <th>Applied On</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="applications-table-body">
+              <tr>
+                <td colspan="5">Loading applications...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="applications-empty" class="empty-state" hidden>
+          <span class="empty-state-icon">▤</span>
+          <h2>No applications yet</h2>
+          <p>Find an opportunity that interests you and apply to get started.</p>
+          <a href="opportunities.html" class="btn btn-primary">
+            Browse Opportunities
+          </a>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+</div>
+
+</body>
+</html>

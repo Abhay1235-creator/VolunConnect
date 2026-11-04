@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports & Analytics | VolunConnect</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <link rel="icon" href="https://api.iconify.design/lucide/chart-column.svg?color=%2316a34a" type="image/svg+xml">
+</head>
+
+<body class="dashboard-body admin-dashboard">
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="admin-sidebar">
+      <a href="index.html" class="brand sidebar-brand">
+        <span class="brand-icon">♥</span>
+        <span>VolunConnect</span>
+      </a>
+
+      <p class="sidebar-label">ADMINISTRATION</p>
+      <nav class="sidebar-nav" aria-label="Admin navigation">
+        <a href="admin.html" class="sidebar-link">▦ Dashboard</a>
+        <a href="manage-volunteers.html" class="sidebar-link">♙ Manage Volunteers</a>
+        <a href="manage-events.html" class="sidebar-link">▤ Manage Events</a>
+        <a href="admin-applications.html" class="sidebar-link">▧ Applications</a>
+        <a href="reports.html" class="sidebar-link active">▥ Reports</a>
+        <a href="notifications.html" class="sidebar-link">♧ Notifications</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="login.html" class="sidebar-link" data-logout>↪ Logout</a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button type="button" class="sidebar-toggle"
+          id="admin-menu-toggle" aria-label="Toggle sidebar"
+          aria-controls="admin-sidebar" aria-expanded="false">☰</button>
+        <div class="topbar-spacer"></div>
+        <span id="admin-name">Administrator</span>
+      </header>
+
+      <div class="dashboard-content">
+        <section class="dashboard-section">
+          <h1>Reports & Analytics</h1>
+          <p>A live overview of volunteer activity and event applications.</p>
+        </section>
+
+        <section class="dashboard-stats admin-stats">
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Total Volunteers</span>
+              <strong class="metric-value" id="report-volunteers">0</strong>
+            </div>
+          </article>
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Total Events</span>
+              <strong class="metric-value" id="report-events">0</strong>
+            </div>
+          </article>
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Applications</span>
+              <strong class="metric-value" id="report-applications">0</strong>
+            </div>
+          </article>
+          <article class="metric-card">
+            <div>
+              <span class="metric-label">Approval Rate</span>
+              <strong class="metric-value" id="report-approval-rate">0%</strong>
+            </div>
+          </article>
+        </section>
+
+        <section class="dashboard-section">
+          <h2>Application Status</h2>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr><th>Status</th><th>Applications</th><th>Share</th></tr>
+              </thead>
+              <tbody id="report-status-table">
+                <tr><td colspan="3">Loading report...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <section class="dashboard-section">
+        <h2>Application Status Overview</h2>
+        <p>Visual breakdown of pending, approved and rejected applications.</p>
+
+        <div
+            id="report-status-chart"
+            role="img"
+            aria-label="Application status breakdown"
+        ></div>
+        </section>
+
+        <section class="dashboard-section">
+          <h2>Events by Category</h2>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr><th>Category</th><th>Events</th></tr>
+              </thead>
+              <tbody id="report-category-table">
+                <tr><td colspan="2">Loading report...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <p id="reports-message" role="status" aria-live="polite"></p>
+      </div>
+
+      <footer class="dashboard-footer">
+        <p>© <span id="current-year"></span> VolunConnect</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

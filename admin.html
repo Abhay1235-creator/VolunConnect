@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Dashboard | VolunConnect</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+
+  <script src="storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <link rel="icon" href="https://api.iconify.design/lucide/shield-check.svg?color=%23142b4a" type="image/svg+xml">
+</head>
+
+<body class="dashboard-body admin-dashboard">
+
+  <div class="dashboard-layout">
+
+    <!-- ADMIN SIDEBAR -->
+    <aside class="sidebar" id="admin-sidebar">
+
+      <a href="index.html" class="brand sidebar-brand">
+        <span class="brand-icon" aria-hidden="true">♥</span>
+        <span>VolunConnect</span>
+      </a>
+
+      <p class="sidebar-label">ADMINISTRATION</p>
+
+      <nav class="sidebar-nav" aria-label="Admin navigation">
+
+        <a href="admin.html" class="sidebar-link active">
+          <span class="sidebar-icon" aria-hidden="true">▦</span>
+          Dashboard
+        </a>
+
+        <a href="manage-volunteers.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">♙</span>
+          Manage Volunteers
+        </a>
+
+        <a href="manage-events.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">▤</span>
+          Manage Events
+        </a>
+
+        <a href="admin-applications.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">▧</span>
+          Applications
+        </a>
+
+        <a href="reports.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">▥</span>
+          Reports
+        </a>
+
+        <a href="notifications.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">♧</span>
+          Notifications
+        </a>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a href="index.html" class="sidebar-link">
+          <span class="sidebar-icon" aria-hidden="true">⚙</span>
+          Settings
+        </a>
+
+        <a href="login.html" class="sidebar-link" data-logout>
+          <span class="sidebar-icon" aria-hidden="true">↪</span>
+          Logout
+        </a>
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN AREA -->
+    <div class="dashboard-main">
+
+      <header class="dashboard-topbar">
+
+        <button
+          type="button"
+          class="sidebar-toggle"
+          id="admin-menu-toggle"
+          aria-label="Toggle sidebar"
+          aria-controls="admin-sidebar"
+          aria-expanded="false"
+        >☰</button>
+
+        <div class="topbar-spacer"></div>
+
+        <a
+          href="notifications.html"
+          class="topbar-notification"
+          aria-label="Notifications"
+        >♧</a>
+
+        <div class="topbar-user">
+          <div class="avatar avatar-admin">A</div>
+
+          <div class="topbar-user-info">
+            <strong id="admin-name">Admin</strong>
+            <span>Administrator</span>
+          </div>
+        </div>
+
+      </header>
+
+
+      <main class="dashboard-content">
+
+        <div class="welcome-row admin-welcome">
+          <div>
+            <span class="eyebrow">PLATFORM OVERVIEW</span>
+            <h1>Admin Dashboard</h1>
+            <p>Manage volunteers, events and community impact.</p>
+          </div>
+
+          <a href="manage-events.html" class="btn btn-primary">
+            + Create Event
+          </a>
+        </div>
+
+
+        <!-- ADMIN METRICS -->
+        <section class="dashboard-stats admin-stats">
+
+          <article class="metric-card">
+            <div class="metric-icon metric-green" aria-hidden="true">♙</div>
+            <div>
+              <span class="metric-label">Total Volunteers</span>
+              <strong class="metric-value" id="admin-total-volunteers">0</strong>
+              <span class="metric-caption">Registered volunteers</span>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-icon metric-red" aria-hidden="true">▦</div>
+            <div>
+              <span class="metric-label">Active Events</span>
+              <strong class="metric-value" id="admin-active-events">0</strong>
+              <span class="metric-caption">Currently available</span>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-icon metric-orange" aria-hidden="true">▤</div>
+            <div>
+              <span class="metric-label">Pending Applications</span>
+              <strong class="metric-value" id="admin-pending-applications">0</strong>
+              <span class="metric-caption">Awaiting review</span>
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-icon metric-green" aria-hidden="true">✓</div>
+            <div>
+              <span class="metric-label">Completed Events</span>
+              <strong class="metric-value" id="admin-completed-events">0</strong>
+              <span class="metric-caption">Successfully completed</span>
+            </div>
+          </article>
+
+        </section>
+
+
+        <!-- ANALYTICS PANELS -->
+        <section class="analytics-grid">
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Volunteer Registrations</h2>
+                <p>Illustrative monthly registration trend</p>
+              </div>
+
+              <span class="panel-badge">6 months</span>
+            </div>
+
+            <div class="chart-placeholder" role="img" aria-label="Sample volunteer registration trend showing growth over six months">
+              <div class="chart-y-labels">
+                <span>150</span>
+                <span>100</span>
+                <span>50</span>
+                <span>0</span>
+              </div>
+
+              <div class="chart-area">
+                <div class="chart-grid-lines">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+                <svg viewBox="0 0 500 180" preserveAspectRatio="none" aria-hidden="true">
+                  <polyline
+                    points="0,150 90,115 180,85 270,85 350,45 420,80 500,20"
+                    fill="none"
+                    stroke="#2563eb"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+
+                  <g fill="#2563eb">
+                    <circle cx="0" cy="150" r="4"/>
+                    <circle cx="90" cy="115" r="4"/>
+                    <circle cx="180" cy="85" r="4"/>
+                    <circle cx="270" cy="85" r="4"/>
+                    <circle cx="350" cy="45" r="4"/>
+                    <circle cx="420" cy="80" r="4"/>
+                    <circle cx="500" cy="20" r="4"/>
+                  </g>
+                </svg>
+
+                <div class="chart-x-labels">
+                  <span>Apr</span>
+                  <span>May</span>
+                  <span>Jun</span>
+                  <span>Jul</span>
+                  <span>Aug</span>
+                  <span>Sep</span>
+                  <span>Oct</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="prototype-note">
+              Illustrative chart; real registration records will be connected later.
+            </p>
+          </article>
+
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Volunteers by Interest</h2>
+                <p>Sample category distribution</p>
+              </div>
+            </div>
+
+            <div class="interest-chart-layout">
+              <div class="donut-chart" role="img" aria-label="Sample interest distribution: environment 30 percent, education 25 percent, community 20 percent, healthcare 15 percent, other 10 percent">
+                <div class="donut-center">
+                  <strong>320</strong>
+                  <span>Volunteers</span>
+                </div>
+              </div>
+
+              <ul class="chart-legend">
+                <li><span class="legend-dot legend-blue"></span>Environment 30%</li>
+                <li><span class="legend-dot legend-green"></span>Education 25%</li>
+                <li><span class="legend-dot legend-orange"></span>Community 20%</li>
+                <li><span class="legend-dot legend-red"></span>Healthcare 15%</li>
+                <li><span class="legend-dot legend-purple"></span>Other 10%</li>
+              </ul>
+            </div>
+
+          </article>
+
+        </section>
+
+
+        <!-- RECENT APPLICATIONS -->
+        <section class="dashboard-section">
+
+          <div class="dashboard-section-heading">
+            <div>
+              <h2>Recent Applications</h2>
+              <p>Review the latest volunteer applications.</p>
+            </div>
+
+            <a href="applications.html" class="text-link">
+              View All →
+            </a>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Volunteer</th>
+                  <th>Event</th>
+                  <th>Applied On</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="admin-recent-applications">
+                <tr>
+                  <td colspan="5">Loading applications...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="prototype-note">
+            Example records for the admin dashboard design.
+          </p>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
