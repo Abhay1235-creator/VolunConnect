@@ -2,9 +2,9 @@
 "use strict";
 
 async function initializeProfilePage() {
-  await window.volunConnectReady;
+  await globalThis.volunConnectReady;
 
-  const storage = window.VolunConnectStorage;
+  const storage = globalThis.VolunConnectStorage;
   const user = storage.requireRole(["volunteer"]);
 
   if (!user) return;
@@ -25,8 +25,6 @@ async function initializeProfilePage() {
         profile.email;
 
     const avatar = document.getElementById("profile-avatar");
-    const photoInput = document.getElementById("profile-image-input");
-    const removeButton = document.getElementById("profile-image-remove");
 
     avatar.replaceChildren();
 

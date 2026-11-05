@@ -5,7 +5,7 @@
    1. SHARED HELPERS
 ========================================= */
 
-const storage = window.VolunConnectStorage;
+const storage = globalThis.VolunConnectStorage;
 
 
 function showFormMessage(element, message, type = "error") {
@@ -105,7 +105,7 @@ function getCurrentUser() {
 }
 
 function redirectToRoleDashboard(user) {
-  window.location.replace(
+  globalThis.location.replace(
     user.role === "admin" ? "admin.html" : "dashboard.html"
   );
 }
@@ -118,12 +118,15 @@ function redirectToRoleDashboard(user) {
 const homeMenuToggle = document.getElementById("menu-toggle");
 const homeNavLinks = document.getElementById("nav-links");
 
+function closeHomeMenu() {
+  if (!homeMenuToggle || !homeNavLinks) return;
+
+  homeNavLinks.classList.remove("open");
+  homeMenuToggle.setAttribute("aria-expanded", "false");
+  homeMenuToggle.setAttribute("aria-label", "Open navigation");
+}
+
 if (homeMenuToggle && homeNavLinks) {
-  function closeHomeMenu() {
-    homeNavLinks.classList.remove("open");
-    homeMenuToggle.setAttribute("aria-expanded", "false");
-    homeMenuToggle.setAttribute("aria-label", "Open navigation");
-  }
 
   homeMenuToggle.addEventListener("click", () => {
     const isOpen = homeNavLinks.classList.toggle("open");
@@ -214,7 +217,7 @@ if (registerForm) {
     button.textContent = "Creating account...";
 
     try {
-      await window.volunConnectReady;
+      await globalThis.volunConnectReady;
 
       await storage.registerUser({
         name,
@@ -229,8 +232,8 @@ if (registerForm) {
         "success"
       );
 
-      window.setTimeout(() => {
-        window.location.href = "login.html";
+      globalThis.setTimeout(() => {
+        globalThis.location.href = "login.html";
       }, 700);
 
     } catch (error) {
@@ -263,7 +266,7 @@ if (loginForm) {
     button.textContent = "Logging in...";
 
     try {
-      await window.volunConnectReady;
+      await globalThis.volunConnectReady;
 
       const user = await storage.login(
         document.getElementById("login-email").value.trim(),
@@ -323,7 +326,7 @@ async function initializeProtectedPage() {
 
   if (!isAdmin && !isVolunteer) return;
 
-  await window.volunConnectReady;
+  await globalThis.volunConnectReady;
 
   const user = storage.requireRole(
     isAdmin ? ["admin"] : ["volunteer", "organization"]
@@ -476,7 +479,7 @@ function renderEventDetails() {
   const container = document.getElementById("event-details-container");
   if (!container) return;
 
-  const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(globalThis.location.search);
   const eventId = params.get("id");
   const event = eventId ? storage.getEventById(eventId) : null;
 
@@ -592,8 +595,8 @@ function renderEventDetails() {
         applyButton.disabled = true;
         applyButton.textContent = "Application Submitted";
 
-        window.setTimeout(() => {
-          window.location.href = "dashboard.html";
+        globalThis.setTimeout(() => {
+          globalThis.location.href = "dashboard.html";
         }, 1000);
 
       } catch (error) {
@@ -1153,7 +1156,7 @@ document.querySelectorAll("[data-logout]").forEach((link) => {
   link.addEventListener("click", (event) => {
     event.preventDefault();
     storage.logout();
-    window.location.replace("login.html");
+    globalThis.location.replace("login.html");
   });
 });
 
@@ -1189,8 +1192,8 @@ function setupSidebar(toggleId, sidebarId) {
     }
   });
 
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 900) closeSidebar();
+  globalThis.addEventListener("resize", () => {
+    if (globalThis.innerWidth > 900) closeSidebar();
   });
 }
 
@@ -1376,7 +1379,7 @@ async function initializeAdminEventManagement() {
   if (!form) return;
 
   try {
-    await window.volunConnectReady;
+    await globalThis.volunConnectReady;
 
     const admin = storage.requireRole(["admin"]);
     if (!admin) return;
@@ -1550,7 +1553,7 @@ function initializeAdminApplicationsPage() {
   if (!tbody) return;
 
   async function loadApplications() {
-    await window.volunConnectReady;
+    await globalThis.volunConnectReady;
 
     const admin = storage.requireRole(["admin"]);
     if (!admin) return;
@@ -1696,7 +1699,7 @@ function initializeAdminVolunteersPage() {
   async function initialize() {
     try {
       // Wait until browser storage and demo data are ready.
-      await window.volunConnectReady;
+      await globalThis.volunConnectReady;
 
       const admin = storage.requireRole(["admin"]);
       if (!admin) return;
@@ -1839,7 +1842,7 @@ function initializeAdminReportsPage() {
   if (!statusTable) return;
 
   async function initialize() {
-    await window.volunConnectReady;
+    await globalThis.volunConnectReady;
 
     const admin = storage.requireRole(["admin"]);
     if (!admin) return;
@@ -1852,10 +1855,6 @@ function initializeAdminReportsPage() {
     );
     const events = storage.getEvents();
     const applications = storage.getApplications();
-
-    const approved = applications.filter(
-      application => application.status === "approved"
-    ).length;
 
     const update = (id, value) => {
       document.getElementById(id).textContent = value;
@@ -2042,7 +2041,7 @@ function initializeAdminNotificationsPage() {
   /* ---------- Main ---------- */
 
   async function initialize() {
-    await window.volunConnectReady;
+    await globalThis.volunConnectReady;
 
     const admin = storage.requireRole(["admin"]);
     if (!admin) return;

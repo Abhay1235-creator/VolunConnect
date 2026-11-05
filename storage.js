@@ -41,7 +41,7 @@
   }
 
   function generateId(prefix = "item") {
-    if (window.crypto && typeof crypto.randomUUID === "function") {
+    if (globalThis.crypto && typeof crypto.randomUUID === "function") {
       return `${prefix}_${crypto.randomUUID()}`;
     }
 
@@ -276,12 +276,12 @@ function publicUser(user) {
     const user = getCurrentUser();
 
     if (!user) {
-      window.location.replace("login.html");
+      globalThis.location.replace("login.html");
       return null;
     }
 
     if (!allowedRoles.includes(user.role)) {
-      window.location.replace(
+      globalThis.location.replace(
         user.role === "admin" ? "admin.html" : "dashboard.html"
       );
 
@@ -717,7 +717,7 @@ function updateVolunteerProfile(userId, changes) {
 
   // ---------- Shared public API ----------
 
-  window.VolunConnectStorage = Object.freeze({
+  globalThis.VolunConnectStorage = Object.freeze({
     keys: KEYS,
     getData,
     saveData,
@@ -742,12 +742,11 @@ function updateVolunteerProfile(userId, changes) {
     deleteEvent,
     reviewApplication,
     markNotificationRead,
-    markAllNotificationsRead,
     updateVolunteerProfile,
   });
 
   // Seed the demo data before the page uses it.
-  window.volunConnectReady = initialize().catch((error) => {
+  globalThis.volunConnectReady = initialize().catch((error) => {
     console.error("VolunConnect initialization failed:", error);
     throw error;
   });

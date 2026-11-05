@@ -2,9 +2,9 @@
 "use strict";
 
 async function initializeCertificatesPage() {
-  await window.volunConnectReady;
+  await globalThis.volunConnectReady;
 
-  const storage = window.VolunConnectStorage;
+  const storage = globalThis.VolunConnectStorage;
   const user = storage.requireRole(["volunteer"]);
 
   if (!user) return;
@@ -95,7 +95,7 @@ async function initializeCertificatesPage() {
       return;
     }
 
-    const certificateWindow = window.open("", "_blank");
+    const certificateWindow = globalThis.open("", "_blank");
 
     if (!certificateWindow) {
       message.textContent =
