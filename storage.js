@@ -610,48 +610,44 @@ function reviewApplication(applicationId, decision, adminId) {
     application,
     notification
   };
-}
-// ---------- Notification management ----------
-
-
-  // ---------- Notification management ----------
-    
-    function markNotificationRead(notificationId, user) {
-      const currentUser = user || getCurrentUser();
-      if (!currentUser) return null;
-      const notifications = getNotifications();
-      const updatedNotifications = notifications.map((notification) => {
-        const belongsToUser =
-          currentUser.role === "admin"
-          ? notification.recipientRole === "admin"
-          : notification.userId === currentUser.id;
-        if (notification.id === notificationId && belongsToUser) {
-          return { ...notification, read: true };
-        }
-        return notification;
-      });
-      saveData(KEYS.notifications, updatedNotifications);
-      return updatedNotifications.find(
-        (notification) => notification.id === notificationId
-      ) || null;
-    }
-    
-    
-    function markAllNotificationsRead(user) {
-      const currentUser = user || getCurrentUser();
-      if (!currentUser) return getNotifications();
-      const updatedNotifications = getNotifications().map((notification) => {
-        const belongsToUser =
-          currentUser.role === "admin"
-          ? notification.recipientRole === "admin"
-          : notification.userId === currentUser.id;
-        return belongsToUser
-          ? { ...notification, read: true }
-          : notification;
-      });
-      saveData(KEYS.notifications, updatedNotifications);
-      return updatedNotifications;
-    }
+  
+  
+  function markNotificationRead(notificationId, user) {
+    const currentUser = user || getCurrentUser();
+    if (!currentUser) return null;
+    const notifications = getNotifications();
+    const updatedNotifications = notifications.map((notification) => {
+      const belongsToUser =
+        currentUser.role === "admin"
+        ? notification.recipientRole === "admin"
+        : notification.userId === currentUser.id;
+      if (notification.id === notificationId && belongsToUser) {
+        return { ...notification, read: true };
+      }
+      return notification;
+    });
+    saveData(KEYS.notifications, updatedNotifications);
+    return updatedNotifications.find(
+      (notification) => notification.id === notificationId
+    ) || null;
+  }
+  
+  
+  function markAllNotificationsRead(user) {
+    const currentUser = user || getCurrentUser();
+    if (!currentUser) return getNotifications();
+    const updatedNotifications = getNotifications().map((notification) => {
+      const belongsToUser =
+        currentUser.role === "admin"
+        ? notification.recipientRole === "admin"
+        : notification.userId === currentUser.id;
+      return belongsToUser
+        ? { ...notification, read: true }
+        : notification;
+    });
+    saveData(KEYS.notifications, updatedNotifications);
+    return updatedNotifications;
+  }
 
   // ---------- Seed initial sample events ----------
 
