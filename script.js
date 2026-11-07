@@ -321,6 +321,9 @@ document.querySelectorAll("[data-demo-link]").forEach((link) => {
 ========================================= */
 
 async function initializeProtectedPage() {
+  if (document.body.classList.contains("shared-notifications-page")) {
+     return;
+  }
   const isAdmin = document.body.classList.contains("admin-dashboard");
   const isVolunteer = document.body.classList.contains("volunteer-dashboard");
 
