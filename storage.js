@@ -69,7 +69,6 @@
     return getData(KEYS.notifications, []);
   }
 
-
   function getNotificationsForUser(user) {
     if (!user) return [];
     return getNotifications().filter((notification) => {
@@ -193,25 +192,22 @@
     users.push(user);
     saveData(KEYS.users, users);
 
-    // Return a safe public profile, never the password hash.
     return publicUser(user);
   }
 
-  
-function publicUser(user) {
-  if (!user) return null;
+  function publicUser(user) {
+    if (!user) return null;
 
-  return {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-    createdAt: user.createdAt,
-    status: user.status,
-    profileImage: user.profileImage || ""
-  };
-}
-
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
+      status: user.status,
+      profileImage: user.profileImage || ""
+    };
+  }
 
   // ---------- Login and session ----------
 
@@ -256,7 +252,6 @@ function publicUser(user) {
 
       const sessionUser = JSON.parse(raw);
 
-      // Recheck the account in stored demo data.
       const storedUser = getUsers().find(
         (user) => user.id === sessionUser.id
       );
@@ -327,7 +322,7 @@ function publicUser(user) {
 
     saveData(KEYS.users, users);
   }
-  
+
   // ---------- Admin event management ----------
 
   function createEvent(eventData) {
@@ -423,32 +418,30 @@ function publicUser(user) {
     return updated;
   }
 
-  
   function deleteEvent(eventId) {
-  const events = getEvents();
-  const exists = events.some((event) => event.id === eventId);
+    const events = getEvents();
+    const exists = events.some((event) => event.id === eventId);
 
-  if (!exists) {
-    throw new Error("Event not found.");
-  }
+    if (!exists) {
+      throw new Error("Event not found.");
+    }
 
-  const relatedApplications = getApplications().filter(
-    (application) => application.eventId === eventId
-  );
+    const relatedApplications = getApplications().filter(
+      (application) => application.eventId === eventId
+    );
 
-  if (relatedApplications.length > 0) {
-    throw new Error(
-      "This event has applications associated with it. " +
-      "Keep the event and change its status to cancelled instead."
+    if (relatedApplications.length > 0) {
+      throw new Error(
+        "This event has applications associated with it. " +
+        "Keep the event and change its status to cancelled instead."
+      );
+    }
+
+    saveData(
+      KEYS.events,
+      events.filter((event) => event.id !== eventId)
     );
   }
-
-  saveData(
-    KEYS.events,
-    events.filter((event) => event.id !== eventId)
-  );
-}
-
 
   // ---------- Volunteer event applications ----------
 
@@ -512,106 +505,105 @@ function publicUser(user) {
       status: "pending"
     };
 
-applications.push(application);
+    applications.push(application);
     saveData(KEYS.applications, applications);
 
-// Notify administrators about the new application.
-const adminNotification = {
-  id: generateId("notification"),
-  recipientRole: "admin",
-  title: "New event application",
-  message: `${user.name} has applied for "${event.title}".`,
-  type: "new_application",
-  applicationId: application.id,
-  userId: user.id,
-  eventId: event.id,
-  read: false,
-  createdAt: new Date().toISOString()
-};
+    const adminNotification = {
+      id: generateId("notification"),
+      recipientRole: "admin",
+      title: "New event application",
+      message: `${user.name} has applied for "${event.title}".`,
+      type: "new_application",
+      applicationId: application.id,
+      userId: user.id,
+      eventId: event.id,
+      read: false,
+      createdAt: new Date().toISOString()
+    };
 
-const notifications = getNotifications();
-notifications.push(adminNotification);
-saveData(KEYS.notifications, notifications);
+    const notifications = getNotifications();
+    notifications.push(adminNotification);
+    saveData(KEYS.notifications, notifications);
 
-return application;
-  
+    return application;
+  }
+
   // ---------- Admin application management ----------
 
-function reviewApplication(applicationId, decision, adminId) {
-  if (!["approved", "rejected"].includes(decision)) {
-    throw new Error("Decision must be approved or rejected.");
-  }
-
-  const applications = getApplications();
-
-  const application = applications.find(
-    (item) => item.id === applicationId
-  );
-
-  if (!application) {
-    throw new Error("Application not found.");
-  }
-
-  if (application.status !== "pending") {
-    throw new Error("This application has already been reviewed.");
-  }
-
-  const users = getUsers();
-  const admin = users.find((user) => user.id === adminId);
-
-  if (!admin || admin.role !== "admin") {
-    throw new Error("Only an administrator can review applications.");
-  }
-
-  const event = getEventById(application.eventId);
-
-  if (!event) {
-    throw new Error("The event associated with this application was not found.");
-  }
-
-  if (decision === "approved") {
-    const approvedCount = applications.filter(
-      (item) =>
-        item.eventId === application.eventId &&
-        item.status === "approved"
-    ).length;
-
-    if (approvedCount >= Number(event.capacity)) {
-      throw new Error("This event has reached its capacity.");
+  function reviewApplication(applicationId, decision, adminId) {
+    if (!["approved", "rejected"].includes(decision)) {
+      throw new Error("Decision must be approved or rejected.");
     }
+
+    const applications = getApplications();
+
+    const application = applications.find(
+      (item) => item.id === applicationId
+    );
+
+    if (!application) {
+      throw new Error("Application not found.");
+    }
+
+    if (application.status !== "pending") {
+      throw new Error("This application has already been reviewed.");
+    }
+
+    const users = getUsers();
+    const admin = users.find((user) => user.id === adminId);
+
+    if (!admin || admin.role !== "admin") {
+      throw new Error("Only an administrator can review applications.");
+    }
+
+    const event = getEventById(application.eventId);
+
+    if (!event) {
+      throw new Error("The event associated with this application was not found.");
+    }
+
+    if (decision === "approved") {
+      const approvedCount = applications.filter(
+        (item) =>
+          item.eventId === application.eventId &&
+          item.status === "approved"
+      ).length;
+
+      if (approvedCount >= Number(event.capacity)) {
+        throw new Error("This event has reached its capacity.");
+      }
+    }
+
+    application.status = decision;
+    application.reviewedAt = new Date().toISOString();
+    application.reviewedBy = adminId;
+
+    saveData(KEYS.applications, applications);
+
+    const notification = {
+      id: generateId("notification"),
+      userId: application.userId,
+      title: decision === "approved"
+        ? "Application approved"
+        : "Application rejected",
+      message: decision === "approved"
+        ? `Your application for "${event.title}" has been approved.`
+        : `Your application for "${event.title}" was not approved.`,
+      type: decision,
+      read: false,
+      createdAt: new Date().toISOString()
+    };
+
+    const notifications = getNotifications();
+    notifications.push(notification);
+    saveData(KEYS.notifications, notifications);
+
+    return {
+      application,
+      notification
+    };
   }
 
-  application.status = decision;
-  application.reviewedAt = new Date().toISOString();
-  application.reviewedBy = adminId;
-
-  saveData(KEYS.applications, applications);
-
-  const notification = {
-    id: generateId("notification"),
-    userId: application.userId,
-    title: decision === "approved"
-      ? "Application approved"
-      : "Application rejected",
-    message: decision === "approved"
-      ? `Your application for "${event.title}" has been approved.`
-      : `Your application for "${event.title}" was not approved.`,
-    type: decision,
-    read: false,
-    createdAt: new Date().toISOString()
-  };
-
-  const notifications = getNotifications();
-  notifications.push(notification);
-  saveData(KEYS.notifications, notifications);
-
-  return {
-    application,
-    notification
-  };
-}
-  
-  
   function markNotificationRead(notificationId, user) {
     const currentUser = user || getCurrentUser();
     if (!currentUser) return null;
@@ -631,8 +623,7 @@ function reviewApplication(applicationId, decision, adminId) {
       (notification) => notification.id === notificationId
     ) || null;
   }
-  
-  
+
   function markAllNotificationsRead(user) {
     const currentUser = user || getCurrentUser();
     if (!currentUser) return getNotifications();
@@ -695,58 +686,56 @@ function reviewApplication(applicationId, decision, adminId) {
     await initializeDemoAdmin();
   }
 
-function updateVolunteerProfile(userId, changes) {
-  const users = getUsers();
-  const index = users.findIndex(user => user.id === userId);
+  function updateVolunteerProfile(userId, changes) {
+    const users = getUsers();
+    const index = users.findIndex(user => user.id === userId);
 
-  if (index === -1) {
-    throw new Error("Volunteer account not found.");
+    if (index === -1) {
+      throw new Error("Volunteer account not found.");
+    }
+
+    if (users[index].role !== "volunteer") {
+      throw new Error("Only volunteer profiles can be edited here.");
+    }
+
+    const name = String(changes.name || "").trim();
+
+    if (name.length < 2 || name.length > 80) {
+      throw new Error("Enter a name between 2 and 80 characters.");
+    }
+
+    const profileImage =
+      changes.profileImage === undefined
+        ? users[index].profileImage || ""
+        : String(changes.profileImage || "");
+
+    if (
+      profileImage &&
+      (
+        !/^data:image\/(jpeg|png|webp);base64,/i.test(profileImage) ||
+        profileImage.length > 1500000
+      )
+    ) {
+      throw new Error("Invalid profile image or image is too large.");
+    }
+
+    users[index] = {
+      ...users[index],
+      name,
+      profileImage
+    };
+
+    saveData(KEYS.users, users);
+
+    const updatedUser = publicUser(users[index]);
+
+    sessionStorage.setItem(
+      KEYS.currentUser,
+      JSON.stringify(updatedUser)
+    );
+
+    return updatedUser;
   }
-
-  if (users[index].role !== "volunteer") {
-    throw new Error("Only volunteer profiles can be edited here.");
-  }
-
-  const name = String(changes.name || "").trim();
-
-  if (name.length < 2 || name.length > 80) {
-    throw new Error("Enter a name between 2 and 80 characters.");
-  }
-
-  const profileImage =
-    changes.profileImage === undefined
-      ? users[index].profileImage || ""
-      : String(changes.profileImage || "");
-
-  if (
-    profileImage &&
-    (
-      !/^data:image\/(jpeg|png|webp);base64,/i.test(profileImage) ||
-      profileImage.length > 1500000
-    )
-  ) {
-    throw new Error("Invalid profile image or image is too large.");
-  }
-
-  users[index] = {
-    ...users[index],
-    name,
-    profileImage
-  };
-
-  saveData(KEYS.users, users);
-
-  const updatedUser = publicUser(users[index]);
-
-  sessionStorage.setItem(
-    KEYS.currentUser,
-    JSON.stringify(updatedUser)
-  );
-
-  return updatedUser;
-}
-
-
 
   // ---------- Shared public API ----------
 
