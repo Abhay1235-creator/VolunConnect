@@ -784,4 +784,4 @@ function updateVolunteerProfile(userId, changes) {
     console.error("VolunConnect initialization failed:", error);
     throw error;
   });
-})();
+});
