@@ -2353,7 +2353,6 @@ function renderNotifications() {
     list.innerHTML =
       "<p>Unable to load notifications. Please refresh the page.</p>";
   });
-}
 
 // Run once the DOM is ready.
 if (document.readyState === "loading") {
