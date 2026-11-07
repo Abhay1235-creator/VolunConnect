@@ -1999,9 +1999,211 @@ initializeAdminReportsPage();
    DAY 5 - ADMIN NOTIFICATIONS
 ========================================= */
 
+/* =========================================
+   SHARED NOTIFICATIONS - ADMIN AND VOLUNTEER
+========================================= */
+
 function initializeAdminNotificationsPage() {
   const list = document.getElementById("admin-notifications-list");
   if (!list) return;
+
+  async function initialize() {
+    await globalThis.volunConnectReady;
+
+    const user = storage.requireRole([
+      "admin",
+      "volunteer",
+      "organization"
+    ]);
+
+    if (!user) return;
+
+    const isAdmin = user.role === "admin";
+
+    const nameElement = document.getElementById("notifications-user-name");
+    const roleElement = document.getElementById("notifications-user-role");
+    const titleElement = document.getElementById("notifications-page-description");
+    const count = document.getElementById("notification-count");
+    const message = document.getElementById("notifications-message");
+    const markAllButton = document.getElementById("mark-all-read-btn");
+
+    if (nameElement) nameElement.textContent = user.name;
+
+    if (roleElement) {
+      roleElement.textContent = isAdmin ? "Admin Panel" : "Volunteer Panel";
+    }
+
+    if (titleElement) {
+      titleElement.textContent = isAdmin
+        ? "Review new applications and platform activity."
+        : "Stay updated on your volunteer applications.";
+    }
+
+    // Build navigation appropriate to the logged-in role.
+    const nav = document.getElementById("notifications-sidebar-nav");
+
+    if (nav) {
+      const adminLinks = [
+        ["admin.html", "Dashboard"],
+        ["manage-events.html", "Manage Events"],
+        ["admin-applications.html", "Applications"],
+        ["manage-volunteers.html", "Volunteers"],
+        ["reports.html", "Reports & Analytics"],
+        ["notifications.html", "Notifications"]
+      ];
+
+      const volunteerLinks = [
+        ["dashboard.html", "Dashboard"],
+        ["opportunities.html", "Opportunities"],
+        ["applications.html", "My Applications"],
+        ["notifications.html", "Notifications"]
+      ];
+
+      const links = isAdmin ? adminLinks : volunteerLinks;
+
+      nav.innerHTML = links.map(([href, label]) => `
+        <a
+          href="${href}"
+          class="sidebar-link ${href === "notifications.html" ? "active" : ""}"
+        >${label}</a>
+      `).join("");
+    }
+
+    // Render only notifications belonging to this account or role.
+    function renderNotifications() {
+      const notifications = storage
+        .getNotificationsForUser(user)
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+        );
+
+      const unreadCount = notifications.filter(
+        (notification) => notification.read !== true
+      ).length;
+
+      if (count) {
+        count.textContent =
+          `${notifications.length} notification${notifications.length === 1 ? "" : "s"} · ` +
+          `${unreadCount} unread`;
+      }
+
+      if (notifications.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <h3>No notifications yet</h3>
+            <p>
+              ${isAdmin
+                ? "New event applications will appear here."
+                : "Updates about your applications will appear here."}
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = notifications.map((notification) => {
+        const isRead = notification.read === true;
+
+        const notificationText =
+          notification.message ||
+          notification.title ||
+          "A new notification is available.";
+
+        const date = notification.createdAt
+          ? formatDateTime(notification.createdAt)
+          : "Date unavailable";
+
+        return `
+          <article class="notification-item"
+            style="
+              padding: 16px;
+              margin-bottom: 12px;
+              border: 1px solid #ddd;
+              border-radius: 10px;
+            ">
+
+            <div style="
+              display: flex;
+              justify-content: space-between;
+              gap: 12px;
+              flex-wrap: wrap;
+            ">
+              <strong>${escapeHTML(notificationText)}</strong>
+              <span>${isRead ? "Read" : "Unread"}</span>
+            </div>
+
+            <p>${escapeHTML(date)}</p>
+
+            ${isRead ? "" : `
+              <button
+                type="button"
+                class="mark-notification-read"
+                data-notification-id="${escapeHTML(notification.id)}">
+                Mark as Read
+              </button>
+            `}
+          </article>
+        `;
+      }).join("");
+    }
+
+    renderNotifications();
+
+    if (markAllButton) {
+      markAllButton.addEventListener("click", () => {
+        storage.markAllNotificationsRead(user);
+        renderNotifications();
+
+        if (message) {
+          message.textContent = "Your notifications have been marked as read.";
+        }
+      });
+    }
+
+    list.addEventListener("click", (event) => {
+      const button = event.target.closest(".mark-notification-read");
+      if (!button) return;
+
+      const notificationId = button.dataset.notificationId;
+      if (!notificationId) return;
+
+      storage.markNotificationRead(notificationId, user);
+      renderNotifications();
+
+      if (message) {
+        message.textContent = "Notification marked as read.";
+      }
+    });
+
+    // Shared logout button.
+    const logoutButton = document.getElementById("logout-btn");
+
+    if (logoutButton) {
+      logoutButton.addEventListener("click", () => {
+        storage.logout();
+        globalThis.location.href = "login.html";
+      });
+    }
+  }
+
+  initialize().catch((error) => {
+    console.error("Notifications failed to initialize:", error);
+    list.innerHTML = `
+      <p>Unable to load notifications. Please refresh the page.</p>
+    `;
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeAdminNotificationsPage
+  );
+} else {
+  initializeAdminNotificationsPage();
+}
 
   /* ---------- Helpers ---------- */
 
