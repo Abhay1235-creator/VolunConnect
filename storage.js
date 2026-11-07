@@ -70,6 +70,17 @@
     return getData(KEYS.notifications, []);
   }
 
+
+  function getNotificationsForUser(user) {
+    if (!user) return [];
+    return getNotifications().filter((notification) => {
+      if (user.role === "admin") {
+        return notification.recipientRole === "admin";
+      }
+      return notification.userId === user.id;
+    });
+  }
+
   // ---------- Password hashing for the demo ----------
 
   function bytesToBase64(bytes) {
@@ -502,11 +513,29 @@ function publicUser(user) {
       status: "pending"
     };
 
-    applications.push(application);
+applications.push(application);
     saveData(KEYS.applications, applications);
 
-    return application;
-  }
+// Notify administrators about the new application.
+const adminNotification = {
+  id: generateId("notification"),
+  recipientRole: "admin",
+  title: "New event application",
+  message: `${user.name} has applied for "${event.title}".`,
+  type: "new_application",
+  applicationId: application.id,
+  userId: user.id,
+  eventId: event.id,
+  read: false,
+  createdAt: new Date().toISOString()
+};
+
+const notifications = getNotifications();
+notifications.push(adminNotification);
+saveData(KEYS.notifications, notifications);
+
+return application;
+  
   // ---------- Admin application management ----------
 
 function reviewApplication(applicationId, decision, adminId) {
@@ -586,35 +615,43 @@ function reviewApplication(applicationId, decision, adminId) {
 
 
   // ---------- Notification management ----------
-
-  function markNotificationRead(notificationId) {
-    const notifications = getNotifications();
-
-    const updatedNotifications = notifications.map((notification) =>
-      notification.id === notificationId
-        ? { ...notification, read: true }
-        : notification
-    );
-
-    saveData(KEYS.notifications, updatedNotifications);
-
-    return updatedNotifications.find(
-      (notification) => notification.id === notificationId
-    ) || null;
-  }
-
-  function markAllNotificationsRead() {
-    const notifications = getNotifications();
-
-    const updatedNotifications = notifications.map((notification) => ({
-      ...notification,
-      read: true
-    }));
-
-    saveData(KEYS.notifications, updatedNotifications);
-
-    return updatedNotifications;
-  }
+    
+    function markNotificationRead(notificationId, user) {
+      const currentUser = user || getCurrentUser();
+      if (!currentUser) return null;
+      const notifications = getNotifications();
+      const updatedNotifications = notifications.map((notification) => {
+        const belongsToUser =
+          currentUser.role === "admin"
+          ? notification.recipientRole === "admin"
+          : notification.userId === currentUser.id;
+        if (notification.id === notificationId && belongsToUser) {
+          return { ...notification, read: true };
+        }
+        return notification;
+      });
+      saveData(KEYS.notifications, updatedNotifications);
+      return updatedNotifications.find(
+        (notification) => notification.id === notificationId
+      ) || null;
+    }
+    
+    
+    function markAllNotificationsRead(user) {
+      const currentUser = user || getCurrentUser();
+      if (!currentUser) return getNotifications();
+      const updatedNotifications = getNotifications().map((notification) => {
+        const belongsToUser =
+          currentUser.role === "admin"
+          ? notification.recipientRole === "admin"
+          : notification.userId === currentUser.id;
+        return belongsToUser
+          ? { ...notification, read: true }
+          : notification;
+      });
+      saveData(KEYS.notifications, updatedNotifications);
+      return updatedNotifications;
+    }
 
   // ---------- Seed initial sample events ----------
 
@@ -727,6 +764,7 @@ function updateVolunteerProfile(userId, changes) {
     getEvents,
     getApplications,
     getNotifications,
+    getNotificationsForUser,
     markAllNotificationsRead,
     registerUser,
     login,
