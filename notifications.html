@@ -4,32 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notifications | VolunConnect</title>
+
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/admin.css">
+
   <script src="storage.js" defer></script>
   <script src="script.js" defer></script>
-  <link rel="icon" href="https://api.iconify.design/lucide/bell.svg?color=%23ea580c" type="image/svg+xml">
+
+  <link
+    rel="icon"
+    href="https://api.iconify.design/lucide/bell.svg?color=%23ea580c"
+    type="image/svg+xml"
+  >
 </head>
-<body class="admin-dashboard">
+
+<body class="admin-dashboard shared-notifications-page">
   <div class="dashboard-layout">
+
     <aside class="sidebar">
       <div class="sidebar-brand">
         <h2>VolunConnect</h2>
-        <p>Admin Panel</p>
+        <p id="notifications-user-role">Dashboard</p>
       </div>
 
-      <nav class="sidebar-nav">
-        <a href="admin.html">Dashboard</a>
-        <a href="manage-events.html">Manage Events</a>
-        <a href="admin-applications.html">Applications</a>
-        <a href="manage-volunteers.html">Volunteers</a>
-        <a href="reports.html">Reports & Analytics</a>
-        <a href="notifications.html" class="active">Notifications</a>
+      <nav class="sidebar-nav" id="notifications-sidebar-nav">
+        <!-- Navigation is generated according to the logged-in role. -->
       </nav>
 
       <div class="sidebar-footer">
-        <p>Logged in as <strong id="admin-name">Admin</strong></p>
+        <p>
+          Logged in as
+          <strong id="notifications-user-name">User</strong>
+        </p>
         <button type="button" id="logout-btn">Logout</button>
       </div>
     </aside>
@@ -38,8 +45,11 @@
       <header class="dashboard-header">
         <div>
           <h1>Notifications</h1>
-          <p>Review recent activity across VolunConnect.</p>
+          <p id="notifications-page-description">
+            Your recent notifications.
+          </p>
         </div>
+
         <button type="button" id="mark-all-read-btn">
           Mark All as Read
         </button>
@@ -58,6 +68,8 @@
         </div>
       </section>
     </main>
+
   </div>
 </body>
 </html>
+```
