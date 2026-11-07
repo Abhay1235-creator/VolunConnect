@@ -610,6 +610,7 @@ function reviewApplication(applicationId, decision, adminId) {
     application,
     notification
   };
+}
   
   
   function markNotificationRead(notificationId, user) {
